@@ -6,14 +6,17 @@ const port = process.env.PORT || 5000;
 
 
 // file dir and all routes
-const user = require("./routes/userRoutes");
 const { connectDB } = require("./config/connectDB");
+const user = require("./routes/userRoutes");
+const job = require("./routes/jobRoutes");
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+// define data file 
 app.use("/user", user);
+app.use("/job", job);
 
 // define database 
 connectDB();

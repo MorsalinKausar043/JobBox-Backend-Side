@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const user = require('../model/userSchema');
+const mongoose = require("mongoose");
+const user = require("../model/userSchema");
 
 // all users data
 const usersApi = async (req, res) => {
@@ -27,8 +27,12 @@ const getUserByEmail = async (req, res) => {
   try {
     const email = req.params.email;
     const query = { email };
-    const singleApi = await user.findOne(query);
-    res.status(201).json(singleApi);
+    const result = await user.findOne(query);
+    if (result?.email) {
+      res.status(201).json({ status: true, data: result });
+    } else {
+      res.status(201).json({ status: false });
+    }
   } catch (error) {
     res.status(501).json({ error: error.massage });
   }
@@ -42,7 +46,7 @@ const postUser = async (req, res) => {
     res.status(201).json(result);
   } catch (error) {
     res.status(501).json({ error: error.massage });
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -72,4 +76,11 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { usersApi, userApi,getUserByEmail, postUser, patchUser, deleteUser };
+module.exports = {
+  usersApi,
+  userApi,
+  getUserByEmail,
+  postUser,
+  patchUser,
+  deleteUser,
+};
